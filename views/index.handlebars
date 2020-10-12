@@ -11,13 +11,18 @@
 <body>
     <div class="main">
         <label class="labels">Registration Number:</label>
-<div class="userInput">
-    <input type="text" placeholder="Enter Reg Number e.g CA 123-456" id="regNumberInput">
-        <button  id="addButton">Add</button>
-</div>
-        
-      
-        <label id = "errorLabel" class="labels"></label>
+        <div class="userInput">
+            <form action="/reg_Numbers" method="POST">
+                <input type="text" value="" placeholder="Enter Reg Number e.g CA 123-456" id="regNumberInput"
+                    name="theRegNumber">
+
+
+                <button id="addButton" name="addRegNumber" type="submit">Add</button>
+            </form>
+        </div>
+
+
+        <label id="errorLabel" class="labels"></label>
         <div class="townsWrapper">
             <select class="townsList" id="townList">
                 <option value="">Filter By Town</option>
@@ -26,26 +31,30 @@
                 <option id="paarl" value="CJ">Paarl</option>
                 <option id="stellenbosch" value="CL">Stellenbosch</option>
             </select>
-            <!-- <button class="buttons" id="filterButton">filter</button> -->
-            <button class="buttons" id="clearButton">Clear Entries</button>
-        </div>
 
-
-
-
+<br>
         <div>
-            <ul id=regNumberList>
+            {{#each addReg}}
+            <ul name="ul" class="townsList">
+                <li>{{this}}</li>
             </ul>
 
+            {{/each}}
+        </div>
 
         </div>
+        <!-- <button class="buttons" id="filterButton">filter</button> -->
+
+
+        <button class="buttons" id="clearButton">Clear Entries</button>
+
+
+
+
+
 
     </div>
 </body>
-<script src="registration_number.js" charset="utf-8"></script>
-
-<script src="registration_number_factory_function.js" charset="utf-8"></script>
-<script src="registration_number.tests.js" charset="utf-8"></script>
 
 
 </html>
