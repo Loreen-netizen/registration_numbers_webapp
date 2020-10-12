@@ -1,15 +1,20 @@
-var registrationNumberFactoryFunction = function(pool) {
-    var regNumber = "";
-    var theTown = "";
-    var allRegNumbers = [];
-    var regObject = [];
-    var count = 0;
-    // var createNewListItem = function(){
-    //     var newListItem = document.createElement("li");
-    //     return newListItem
-    // }
+let registrationNumberFactoryFunction = function(pool) {
+    let regNumber = "";
+    let theTown = "";
+    let allRegNumbers = [];
+    let regObject = [];
+    let count = 0;
 
-    var regNumbersObject = function(theRegNumber) {
+
+    let storeReg = async function(regNumber) {
+        // if (!regObject.includes(theRegNumber)) {
+        await pool.query(`INSERT into reg_nums
+            (reg_number) VALUES($1`, [regNumber])
+            // }
+
+    };
+
+    let regNumbersObject = function(theRegNumber) {
         if (!regObject.includes(theRegNumber)) {
             regObject.push(theRegNumber);
             count += 1;
@@ -21,7 +26,7 @@ var registrationNumberFactoryFunction = function(pool) {
     }
 
 
-    var townSelected = function(town) {
+    let townSelected = function(town) {
 
         theTown = town;
 
@@ -42,7 +47,7 @@ var registrationNumberFactoryFunction = function(pool) {
 
     };
 
-    var pushRegNumbers = function() {
+    let pushRegNumbers = function() {
         return allRegNumbers
     };
 
@@ -54,7 +59,7 @@ var registrationNumberFactoryFunction = function(pool) {
 
 
     return {
-        // createNewListItem,
+        storeReg,
         regNumbersObject,
         townSelected,
         pushRegNumbers,
