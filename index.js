@@ -50,14 +50,13 @@ app.get("/", function(req, res) {
 
 app.post("/reg_Numbers", async function(req, res) {
     let regNumber = req.body.theRegNumber;
-    let renders = {
-        addReg: registrationNumberFactoryFunction.regNumbersObject(regNumber),
+    // let renders = {
+    //     addReg: registrationNumberFactoryFunction.regNumbersObject(regNumber),
 
-        storeReg: await registrationNumberFactoryFunction.storeReg(regNumber)
-    }
-
-    storeReg;
-    res.render('index', { renders })
+    //     // storeReg: await registrationNumberFactoryFunction.storeReg(regNumber)
+    // }
+    let addReg = registrationNumberFactoryFunction.regNumbersObject(regNumber)
+    res.render('index', { addReg })
 });
 
 
