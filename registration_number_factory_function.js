@@ -27,6 +27,14 @@ let registrationNumberFactoryFunction = function(pool) {
 
     };
 
+    let updateTownIdInRegTable = function(startString) {
+
+        var updateTownIdQuery = (`UPDATE reg_nums
+        SET town_id = ($1)
+        WHERE reg_number =($1)`, [startString, regNumber])
+
+    }
+
     // let storeTown = async function(townName, townString) {
     //     // if (!regObject.includes(theRegNumber)) {
     //     let storeTownQuery = await pool.query(`INSERT into towns
@@ -86,6 +94,7 @@ let registrationNumberFactoryFunction = function(pool) {
         regNumbersObject,
         //townSelected,
         pushRegNumbers,
+        updateTownIdInRegTable
 
     }
 }
