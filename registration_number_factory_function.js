@@ -15,12 +15,40 @@ let registrationNumberFactoryFunction = function(pool) {
 
     };
 
+    let storeTown = async function(townName, townString) {
+        // if (!regObject.includes(theRegNumber)) {
+        let storeTownQuery = await pool.query(`INSERT into towns
+            (town_name, town_string) VALUES($1, $2)`, [townName], [townString]);
+        return storeTownQuery;
+    };
+
+
+    // let townSelected = async function(town) {
+
+    //     if (town === "CA") {
+    //         await storeTown('Cape Town', 'CA');
+
+    //     } else if (town === "CJ") {
+    //         await storeTown('Paarl', 'CJ');
+
+    //     } else if (town === "CL") {
+    //         await storeTown('Stellenbosch', 'CL');
+
+    //     } else if (town === "") {
+    //         return "Please Select Town";
+    //     }
+
+    //     // pushRegNumbers(allRegNumbers);
+
+    // };
+
+
 
     let regNumbersObject = async function(theRegNumber) {
         if (!regObject.includes(theRegNumber)) {
             await regObject.push(theRegNumber);
             count += 1;
-            console.log(count);
+            // console.log(count);
 
             return regObject;
         } else { return regObject }
@@ -28,26 +56,6 @@ let registrationNumberFactoryFunction = function(pool) {
     }
 
 
-    let townSelected = function(town) {
-
-        theTown = town;
-
-        if (theTown === "CA") {
-            allRegNumbers.push("CA");
-            return "Cape Town";
-        } else if (theTown === "CJ") {
-            allRegNumbers.push("CJ");
-            return "Paarl";
-        } else if (theTown === "CL") {
-            allRegNumbers.push("CL");
-            return "Stellenbosch";
-        } else if (theTown === "") {
-            return "Please Select Town";
-        }
-
-        pushRegNumbers(allRegNumbers);
-
-    };
 
     let pushRegNumbers = function() {
         return allRegNumbers
@@ -62,9 +70,11 @@ let registrationNumberFactoryFunction = function(pool) {
 
     return {
         storeReg,
+        storeTown,
         regNumbersObject,
         townSelected,
         pushRegNumbers,
+
     }
 }
 

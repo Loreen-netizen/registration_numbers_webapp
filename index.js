@@ -50,7 +50,6 @@ app.get("/", function(req, res) {
 
 app.post("/reg_Numbers", async function(req, res) {
     let regNumber = req.body.theRegNumber;
-    // console.log(regNumber)
     try {
         let saveReg = await registrationNumberFactoryFunction.storeReg(regNumber);
         let addReg = await registrationNumberFactoryFunction.regNumbersObject(regNumber);
@@ -65,9 +64,23 @@ app.post("/reg_Numbers", async function(req, res) {
         console.log(error)
     }
 
-    // let addReg = registrationNumberFactoryFunction.regNumbersObject(regNumber)
-
 });
+
+app.post('/selectTown', async function(req, res) {
+
+    try {
+        let town = req.body.theTown;
+        console.log(town);
+        let regNumber = req.body.theRegNumber;
+        let storeTheTown = await registrationNumberFactoryFunction.townSelected(town, regNumber);
+
+        res.render("index", { storeTheTown });
+    } catch (error) {
+        console.log(error)
+    }
+
+
+})
 
 
 

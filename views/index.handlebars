@@ -23,18 +23,28 @@
 
 
         <label id="errorLabel" class="labels"></label>
-        <div class="townsWrapper">
-            <select class="townsList" id="townList">
+
+         <div class="townsWrapper">
+
+              <form action="/selectTown" method="POST">
+       
+            <select  name = "theTown" class="townsList" id="townList"  type= "submit">
                 <option value="">Filter By Town</option>
                 <option value="">All Towns</option>
-                <option id="capetown" value="CA">Cape Town</option>
-                <option id="paarl" value="CJ">Paarl</option>
+                <option id="capetown" value="CA" >Cape Town</option>
+                <option id="paarl" value="CJ" >Paarl</option>
                 <option id="stellenbosch" value="CL">Stellenbosch</option>
             </select>
+            <button type="submit " name= "submitTown"></button>
 
 <br>
-        <div>
-            {{#each data.reg}}
+        </form>
+
+         </div>
+
+        
+        
+                   {{#each data.reg}}
             <ul name="ul" class="townsList">
                 <li>{{this}}</li>
             </ul>
