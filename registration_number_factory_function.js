@@ -3,24 +3,36 @@ let registrationNumberFactoryFunction = function(pool) {
     let theTown = "";
     let allRegNumbers = [];
     let regObject = [];
+
     let count = 0;
 
 
-    let storeReg = async function(theRegNumber) {
-        // if (!regObject.includes(theRegNumber)) {
-        let storeRegQuery = (`INSERT into reg_nums
+
+    var isReg = async function(regNum) {
+        var queryRegNumber = await pool.query(
+            `SELECT reg_number 
+            FROM reg_nums
+            where reg_number  = ($1)`, [regNum]);
+        console.log(queryRegNumber.rowCount);
+        return queryRegNumber.rowCount;
+    };
+
+    var storeReg = async function(theRegNumber) {
+        var checkReg = await isReg(theRegNumber);
+        if (checkReg < 1) {
+            var storeRegQuery = (`INSERT into reg_nums
             (reg_number) VALUES($1)`);
-        await pool.query(storeRegQuery, [theRegNumber]);
-        // }
+            await pool.query(storeRegQuery, [theRegNumber]);
+        } else { console.log("REG ALREADY STORED") }
 
     };
 
-    let storeTown = async function(townName, townString) {
-        // if (!regObject.includes(theRegNumber)) {
-        let storeTownQuery = await pool.query(`INSERT into towns
-            (town_name, town_string) VALUES($1, $2)`, [townName], [townString]);
-        return storeTownQuery;
-    };
+    // let storeTown = async function(townName, townString) {
+    //     // if (!regObject.includes(theRegNumber)) {
+    //     let storeTownQuery = await pool.query(`INSERT into towns
+    //         (town_name, town_string) VALUES($1, $2)`, [townName], [townString]);
+    //     return storeTownQuery;
+    // };
 
 
     // let townSelected = async function(town) {
@@ -70,9 +82,9 @@ let registrationNumberFactoryFunction = function(pool) {
 
     return {
         storeReg,
-        storeTown,
+        isReg,
         regNumbersObject,
-        townSelected,
+        //townSelected,
         pushRegNumbers,
 
     }

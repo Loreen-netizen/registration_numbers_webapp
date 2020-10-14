@@ -53,10 +53,13 @@ app.post("/reg_Numbers", async function(req, res) {
     try {
         let saveReg = await registrationNumberFactoryFunction.storeReg(regNumber);
         let addReg = await registrationNumberFactoryFunction.regNumbersObject(regNumber);
+        let isReg = await registrationNumberFactoryFunction.isReg(regNumber);
         res.render('index', {
             data: {
+                is: isReg,
                 reg: addReg,
                 store: saveReg
+
             }
         })
 

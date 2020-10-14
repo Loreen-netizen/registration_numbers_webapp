@@ -1,12 +1,13 @@
 CREATE TABLE towns (
     town_name varchar (100),
-    town_string varchar (100) primary key
+    town_string varchar (100),
+    id serial primary key
 );
 
 CREATE TABLE reg_nums(
     reg_number text,
-    start_string varchar,
-    FOREIGN KEY (start_string) REFERENCES towns(town_string)
+    town_id int,
+    FOREIGN KEY(town_id) REFERENCES towns(id)
 
 );
 
