@@ -6,17 +6,19 @@ let registrationNumberFactoryFunction = function(pool) {
     let count = 0;
 
 
-    let storeReg = async function(regNumber) {
+    let storeReg = async function(theRegNumber) {
         // if (!regObject.includes(theRegNumber)) {
-        await pool.query(`INSERT into reg_nums
-            (reg_number) VALUES($1`, [regNumber])
-            // }
+        let storeRegQuery = (`INSERT into reg_nums
+            (reg_number) VALUES($1)`);
+        await pool.query(storeRegQuery, [theRegNumber]);
+        // }
 
     };
 
-    let regNumbersObject = function(theRegNumber) {
+
+    let regNumbersObject = async function(theRegNumber) {
         if (!regObject.includes(theRegNumber)) {
-            regObject.push(theRegNumber);
+            await regObject.push(theRegNumber);
             count += 1;
             console.log(count);
 

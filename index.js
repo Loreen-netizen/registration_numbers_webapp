@@ -10,7 +10,7 @@ let session = require('express-session');
 let pg = require("pg");
 const { log } = require("handlebars");
 let Pool = pg.Pool;
-let connectionString = process.env.DATABASE_URL || 'postgresql://loreen:pg123@localhost:5432/projects';
+let connectionString = process.env.DATABASE_URL || 'postgresql://loreen:pg123@localhost:5432/reg_numbers';
 let pool = new Pool({
     connectionString
 });
@@ -50,13 +50,23 @@ app.get("/", function(req, res) {
 
 app.post("/reg_Numbers", async function(req, res) {
     let regNumber = req.body.theRegNumber;
-    // let renders = {
-    //     addReg: registrationNumberFactoryFunction.regNumbersObject(regNumber),
+    // console.log(regNumber)
+    try {
+        let saveReg = await registrationNumberFactoryFunction.storeReg(regNumber);
+        let addReg = await registrationNumberFactoryFunction.regNumbersObject(regNumber);
+        res.render('index', {
+            data: {
+                reg: addReg,
+                store: saveReg
+            }
+        })
 
-    //     // storeReg: await registrationNumberFactoryFunction.storeReg(regNumber)
-    // }
-    let addReg = registrationNumberFactoryFunction.regNumbersObject(regNumber)
-    res.render('index', { addReg })
+    } catch (error) {
+        console.log(error)
+    }
+
+    // let addReg = registrationNumberFactoryFunction.regNumbersObject(regNumber)
+
 });
 
 
