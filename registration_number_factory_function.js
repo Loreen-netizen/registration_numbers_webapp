@@ -1,7 +1,6 @@
-let registrationNumberFactoryFunction = function(pool) {
+var registrationNumberFactoryFunction = function(pool) {
     let regNumber = "";
     let theTown = "";
-    let allRegNumbers = [];
     let regObject = [];
 
     let count = 0;
@@ -35,12 +34,19 @@ let registrationNumberFactoryFunction = function(pool) {
 
     }
 
-    // let storeTown = async function(townName, townString) {
-    //     // if (!regObject.includes(theRegNumber)) {
-    //     let storeTownQuery = await pool.query(`INSERT into towns
-    //         (town_name, town_string) VALUES($1, $2)`, [townName], [townString]);
-    //     return storeTownQuery;
-    // };
+
+    let allRegNumbers = function() {
+            let allRegNumbersQuery = (`SELECT reg_number
+            FROM reg_nums`);
+            console.log(allRegNumbersQuery.rows);
+            return allRegNumbersQuery.rows;
+        }
+        // let storeTown = async function(townName, townString) {
+        //     // if (!regObject.includes(theRegNumber)) {
+        //     let storeTownQuery = await pool.query(`INSERT into towns
+        //         (town_name, town_string) VALUES($1, $2)`, [townName], [townString]);
+        //     return storeTownQuery;
+        // };
 
 
     // let townSelected = async function(town) {
@@ -77,9 +83,9 @@ let registrationNumberFactoryFunction = function(pool) {
 
 
 
-    let pushRegNumbers = function() {
-        return allRegNumbers
-    };
+    // let pushRegNumbers = function() {
+    //     return allRegNumbers
+    // };
 
 
 
@@ -93,8 +99,9 @@ let registrationNumberFactoryFunction = function(pool) {
         isReg,
         regNumbersObject,
         //townSelected,
-        pushRegNumbers,
-        updateTownIdInRegTable
+        // pushRegNumbers,
+        updateTownIdInRegTable,
+        allRegNumbers
 
     }
 }

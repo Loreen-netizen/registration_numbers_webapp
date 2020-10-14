@@ -1,4 +1,4 @@
-let registrationNumberFactoryFunction = require("../registration_number_factory_function.js");
+var RegistrationNumberFactoryFunction = require("../registration_number_factory_function");
 let assert = require("assert");
 let pg = require("pg");
 let Pool = pg.Pool;
@@ -10,34 +10,38 @@ let pool = new Pool({
 
 describe("registrationNumberFactoryFunction", async function() {
     beforeEach(async function() {
-            await pool.query(`delete from users`)
-        })
-        // it("should create a new list item when add button is clicked", function(){
+        await pool.query(`delete from reg_nums`)
+    })
 
-    //  var registrationNumberFactoryFunction2 = registrationNumberFactoryFunction();
-    //  assert.equal(<li></li>,registrationNumberFactoryFunction2.createNewListItem("click"));
-
-    // });
-    it("should display registration Number", async function() {
-        var registrationNumberFactoryFunction = await registrationNumberFactoryFunction(pool);
-        assert.equal("CA 123-123", registrationNumberFactoryFunction1.displayRegNumber("CA 123-123"));
+    it("should check if a registration number is in the database", async function() {
+        //assemble
+        var registrationNumberFactoryFunction = await RegistrationNumberFactoryFunction(pool);
+        //act
+        let isReg = await registrationNumberFactoryFunction.isReg('CA 123 345')
+            //assert
+        assert.equal(0, isReg);
 
     });
 
-    it("should return Correct Town for reg Number ", async function() {
-        var registrationNumberFactoryFunction = await registrationNumberFactoryFunction(pool);
-        assert.equal("Cape Town", registrationNumberFactoryFunction2.townSelected("CA"));
-        assert.equal("Paarl", registrationNumberFactoryFunction2.townSelected("CJ"));
-        assert.equal("Stellenbosch", registrationNumberFactoryFunction2.townSelected("CL"));
-        assert.equal("Please Select Town", registrationNumberFactoryFunction2.townSelected(""));
+    it("should insert a registration number into the database ", async function() {
+        //assemble
+        var registrationNumberFactoryFunction = await RegistrationNumberFactoryFunction(pool);
+        //act
+        var insertRegQuery = await registrationNumberFactoryFunction.storeReg('CA 234 789');
+        insertRegQuery;
+        //assert
+        assert.equal(1, await registrationNumberFactoryFunction.isReg('CA 234 789'));
     });
 
-    it("should save all reg numbers in an array", async function() {
-        var registrationNumberFactoryFunction = await registrationNumberFactoryFunction(pool);
-        assert.equal("Cape Town", registrationNumberFactoryFunction3.townSelected("CA"));
-        assert.equal("Paarl", registrationNumberFactoryFunction3.townSelected("CJ"));
-        assert.equal("Stellenbosch", registrationNumberFactoryFunction3.townSelected("CL"));
-        assert.deepEqual(["CA", "CJ", "CL"], registrationNumberFactoryFunction3.pushRegNumbers());
+    it("should save all reg numbers in database", async function() {
+        //assmble
+        var registrationNumberFactoryFunction = await RegistrationNumberFactoryFunction(pool);
+
+        //act
+        var insertRegQuery = await registrationNumberFactoryFunction.storeReg('CA 234 789');
+        insertRegQuery;
+        //assert
+        assert.equal("Cape Town", await registrationNumberFactoryFunction.allRegNumbers())
     });
 
     after(async function() {
