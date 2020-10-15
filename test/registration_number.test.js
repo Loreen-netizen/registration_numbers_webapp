@@ -41,7 +41,9 @@ describe("registrationNumberFactoryFunction", async function() {
         var insertRegQuery = await registrationNumberFactoryFunction.storeReg('CA 234 789');
         insertRegQuery;
         //assert
-        assert.equal("Cape Town", await registrationNumberFactoryFunction.allRegNumbers())
+        assert.deepEqual([{
+            reg_number: 'CA 234 789'
+        }], await registrationNumberFactoryFunction.allRegNumbers())
     });
 
     after(async function() {

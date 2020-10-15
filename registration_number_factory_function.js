@@ -35,8 +35,8 @@ var registrationNumberFactoryFunction = function(pool) {
     }
 
 
-    let allRegNumbers = function() {
-            let allRegNumbersQuery = (`SELECT reg_number
+    let allRegNumbers = async function() {
+            let allRegNumbersQuery = await pool.query(`SELECT reg_number
             FROM reg_nums`);
             console.log(allRegNumbersQuery.rows);
             return allRegNumbersQuery.rows;
