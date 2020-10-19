@@ -51,16 +51,15 @@ app.get("/", function(req, res) {
 app.post("/reg_Numbers", async function(req, res) {
     let regNumber = req.body.theRegNumber;
     try {
-        let saveReg = await registrationNumberFactoryFunction.storeReg(regNumber);
-        let addReg = await registrationNumberFactoryFunction.regNumbersObject(regNumber);
-        let isReg = await registrationNumberFactoryFunction.isReg(regNumber);
-        res.render('index', {
-            data: {
-                is: isReg,
-                reg: addReg,
-                store: saveReg
+        var data = {
+            regObject: await registrationNumberFactoryFunction.regObject(regNumber),
+            saveReg: await registrationNumberFactoryFunction.storeReg(regNumber),
+            allRegNumbers: await registrationNumberFactoryFunction.allRegNumbers(),
+            isReg: await registrationNumberFactoryFunction.isReg(regNumber),
+        }
 
-            }
+        res.render('index', {
+            data
         })
 
     } catch (error) {
@@ -86,9 +85,17 @@ app.post('/selectTown', async function(req, res) {
 })
 
 
+app.post("/clearReg", async function(req, res) {
+
+    let clearReg = await registrationNumberFactoryFunction.clearRegEntries();
+
+    res.render("index", { clearReg })
+});
 
 
-let PORT = process.env.PORT || 3009;
+
+
+const PORT = process.env.PORT || 3999;
 
 app.listen(PORT, function() {
     console.log("App starting on port", PORT)

@@ -18,6 +18,13 @@
 
 
                 <button id="addButton" name="addRegNumber" type="submit">Add</button>
+                 
+            </form>
+
+            <form action="/clearReg" method="POST">
+            
+             <button {{clearEntries}} id="clearRegButton" name="clearRegNumber" type="submit">Clear Entries</button>
+            
             </form>
         </div>
 
@@ -44,14 +51,14 @@
 
         
         
-                   {{#each data.reg}}
+                   {{#each data.allRegNumbers}}
             <ul name="ul" class="townsList">
-                <li>{{this}}</li>
+                <li>{{this.reg_number}}</li>
             </ul>
 
             {{/each}}
 
-            <p>{{data.store}}</p>
+            {{!-- <p>{{data.store}}</p> --}}
         </div>
 
         </div>

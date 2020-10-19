@@ -1,7 +1,7 @@
 var registrationNumberFactoryFunction = function(pool) {
     let regNumber = "";
     let theTown = "";
-    let regObject = [];
+
 
     let count = 0;
 
@@ -26,6 +26,13 @@ var registrationNumberFactoryFunction = function(pool) {
 
     };
 
+    let clearRegEntries = async function() {
+
+        let clearRegQuery = await pool.query(`DELETE FROM reg_nums`);
+
+        return clearRegQuery
+    }
+
     let updateTownIdInRegTable = function(startString) {
 
         var updateTownIdQuery = (`UPDATE reg_nums
@@ -37,7 +44,7 @@ var registrationNumberFactoryFunction = function(pool) {
 
     let allRegNumbers = async function() {
             let allRegNumbersQuery = await pool.query(`SELECT reg_number
-            FROM reg_nums`);
+            FROM reg_nums`)
             console.log(allRegNumbersQuery.rows);
             return allRegNumbersQuery.rows;
         }
@@ -68,18 +75,22 @@ var registrationNumberFactoryFunction = function(pool) {
 
     // };
 
-
+    let regObject = async function(regNumber) {
+        let regObjectQuery = (`SELECT reg_number 
+        FROM reg_nums
+        WHERE reg_number = ($1)`, [regNumber])
+        console.log(regObjectQuery.rows)
+        return regObjectQuery.rows
+    };
 
     let regNumbersObject = async function(theRegNumber) {
-        if (!regObject.includes(theRegNumber)) {
-            await regObject.push(theRegNumber);
-            count += 1;
-            // console.log(count);
+        if (regObject) {
+            { return regObject }
 
-            return regObject;
-        } else { return regObject }
+        }
+    };
 
-    }
+
 
 
 
@@ -98,12 +109,14 @@ var registrationNumberFactoryFunction = function(pool) {
         storeReg,
         isReg,
         regNumbersObject,
-        //townSelected,
-        // pushRegNumbers,
+        regObject,
+        clearRegEntries,
         updateTownIdInRegTable,
         allRegNumbers
 
     }
-}
+
+};
+
 
 module.exports = registrationNumberFactoryFunction;
