@@ -3,9 +3,9 @@ let app = express();
 let bodyParser = require("body-parser");
 let handlebars = require("express-handlebars");
 let RegistrationNumberFactoryFunction = require("./registration_number_factory_function.js");
-
-let flash = require('express-flash');
 let session = require('express-session');
+let flash = require('express-flash');
+
 
 let pg = require("pg");
 const { log } = require("handlebars");
@@ -21,7 +21,7 @@ app.engine('handlebars', handlebars({ layoutsDir: "./views/layouts" }));
 app.set('view engine', 'handlebars');
 
 app.use(session({
-    secret: 'express flash string',
+    secret: 'expre$$ fl@sh string',
     resave: false,
     saveUninitialized: true
 }));
@@ -49,18 +49,27 @@ app.get("/", function(req, res) {
 });
 
 app.post("/reg_Numbers", async function(req, res) {
-    let regNumber = req.body.theRegNumber;
     try {
-        var data = {
-            regObject: await registrationNumberFactoryFunction.regObject(regNumber),
-            saveReg: await registrationNumberFactoryFunction.storeReg(regNumber),
-            allRegNumbers: await registrationNumberFactoryFunction.allRegNumbers(),
-            isReg: await registrationNumberFactoryFunction.isReg(regNumber),
-        }
+        let regNumber = req.body.theRegNumber;
 
-        res.render('index', {
-            data
-        })
+
+        if (!regNumber) {
+            req.flash('error', 'Please enter reg number')
+
+        } else
+
+        {
+            var data = {
+                regObject: await registrationNumberFactoryFunction.regObject(regNumber),
+                saveReg: await registrationNumberFactoryFunction.storeReg(regNumber),
+                allRegNumbers: await registrationNumberFactoryFunction.allRegNumbers(),
+                isReg: await registrationNumberFactoryFunction.isReg(regNumber),
+            }
+
+            res.render('index', {
+                data
+            })
+        }
 
     } catch (error) {
         console.log(error)
@@ -73,10 +82,10 @@ app.post('/selectTown', async function(req, res) {
     try {
         let town = req.body.theTown;
         console.log(town);
-        let regNumber = req.body.theRegNumber;
-        let storeTheTown = await registrationNumberFactoryFunction.townSelected(town, regNumber);
+        //  let regNumber = req.body.theRegNumber;
+        let townSelected = await registrationNumberFactoryFunction.townSelected(town);
 
-        res.render("index", { storeTheTown });
+        res.render("index", { townSelected });
     } catch (error) {
         console.log(error)
     }

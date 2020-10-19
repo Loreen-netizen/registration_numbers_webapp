@@ -10,7 +10,35 @@
 
 <body>
     <div class="main">
+
+         <div class="err">
+             
+             {{messages.error}}
+         
+         </div>
+
+
         <label class="labels">Registration Number:</label>
+
+         <div class="townsWrapper">
+
+              <form action="/selectTown" method="POST">
+       
+            <select  name = "theTown" class="townsList" id="townList"  type= "submit">
+                <option value="">Filter By Town</option>
+                <option value="">All Towns</option>
+                <option id="capetown" value="CA" >Cape Town</option>
+                <option id="paarl" value="CJ" >Paarl</option>
+                <option id="stellenbosch" value="CL">Stellenbosch</option>
+            </select>
+            <button type="submit " name= "submitTown"></button>
+
+<br> <br>
+        </form>
+
+         </div>
+
+
         <div class="userInput">
             <form action="/reg_Numbers" method="POST">
                 <input type="text" value="" placeholder="Enter Reg Number e.g CA 123-456" id="regNumberInput"
@@ -29,25 +57,9 @@
         </div>
 
 
-        <label id="errorLabel" class="labels"></label>
+        <label class="errorLabel" class="labels"></label>
 
-         <div class="townsWrapper">
 
-              <form action="/selectTown" method="POST">
-       
-            <select  name = "theTown" class="townsList" id="townList"  type= "submit">
-                <option value="">Filter By Town</option>
-                <option value="">All Towns</option>
-                <option id="capetown" value="CA" >Cape Town</option>
-                <option id="paarl" value="CJ" >Paarl</option>
-                <option id="stellenbosch" value="CL">Stellenbosch</option>
-            </select>
-            <button type="submit " name= "submitTown"></button>
-
-<br>
-        </form>
-
-         </div>
 
         
         

@@ -1,13 +1,12 @@
 CREATE TABLE towns (
     town_name varchar (100),
-    town_string varchar (100),
-    id serial primary key
+    town_string varchar (100) primary key
 );
 
 CREATE TABLE reg_nums(
     reg_number text,
-    town_id int,
-    FOREIGN KEY(town_id) REFERENCES towns(id)
+    town_start_string varchar,
+    FOREIGN KEY(town_start_string) REFERENCES towns(town_string)
 
 );
 
@@ -16,7 +15,7 @@ INSERT into towns (town_name, town_string) VALUES('Cape Town', 'CA');
 INSERT into towns(town_name, town_string) VALUES('Paarl', 'CJ');
 INSERT into towns (town_name, town_string) VALUES('Stellenbosch', 'CL');
 
-    ALTER TABLE towns ADD id serial;
+    -- ALTER TABLE towns ADD id serial;
 
 
 ALTER TABLE reg_nums ADD town_id,

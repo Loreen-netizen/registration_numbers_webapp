@@ -17,12 +17,32 @@ var registrationNumberFactoryFunction = function(pool) {
     };
 
     var storeReg = async function(theRegNumber) {
+
         var checkReg = await isReg(theRegNumber);
-        if (checkReg < 1) {
-            var storeRegQuery = (`INSERT into reg_nums
-            (reg_number) VALUES($1)`);
-            await pool.query(storeRegQuery, [theRegNumber]);
+        if (checkReg < 1 && !theRegNumber == "") {
+
+            if (theRegNumber.startsWith('CA')) {
+                await pool.query(`INSERT into reg_nums
+                (reg_number , town_start_string) VALUES( $1, 'CA')`, [theRegNumber]);
+
+            } else if (theRegNumber.startsWith('CA')) {
+                await pool.query(`INSERT into reg_nums
+                (reg_number , town_start_string) VALUES( $1, 'CA')`, [theRegNumber]);
+
+            } else if (theRegNumber.startsWith('CA')) {
+                await pool.query(`INSERT into reg_nums
+                (reg_number , town_start_string) VALUES( $1, 'CA')`, [theRegNumber]);
+
+            }
+
         } else { console.log("REG ALREADY STORED") }
+
+        //  {
+        //     var storeRegQuery = (`INSERT into reg_nums
+        //     (reg_number) VALUES($1)`);
+        //     await pool.query(storeRegQuery, [theRegNumber]);
+        // } 
+
 
     };
 
@@ -43,37 +63,36 @@ var registrationNumberFactoryFunction = function(pool) {
 
 
     let allRegNumbers = async function() {
-            let allRegNumbersQuery = await pool.query(`SELECT reg_number
+        let allRegNumbersQuery = await pool.query(`SELECT reg_number
             FROM reg_nums`)
-            console.log(allRegNumbersQuery.rows);
-            return allRegNumbersQuery.rows;
+        console.log(allRegNumbersQuery.rows);
+        return allRegNumbersQuery.rows;
+    }
+    let getAllFromTown = async function(townString) {
+        // if (!regObject.includes(theRegNumber)) {
+        let getAllFromTownQuery = await pool.query(`SELECT reg_number
+            FROM reg_num
+            WHERE town_id = $1) VALUES($1, $2)`, [townName], [townString]);
+        return storeTownQuery;
+    };
+
+
+    let townSelected = async function(town) {
+
+        if (town === "CA") {
+            await storeTown('Cape Town', 'CA');
+
+        } else if (town === "CJ") {
+            await storeTown('Paarl', 'CJ');
+
+        } else if (town === "CL") {
+            await storeTown('Stellenbosch', 'CL');
+
+        } else if (town === "") {
+            return "Please Select Town";
         }
-        // let storeTown = async function(townName, townString) {
-        //     // if (!regObject.includes(theRegNumber)) {
-        //     let storeTownQuery = await pool.query(`INSERT into towns
-        //         (town_name, town_string) VALUES($1, $2)`, [townName], [townString]);
-        //     return storeTownQuery;
-        // };
 
-
-    // let townSelected = async function(town) {
-
-    //     if (town === "CA") {
-    //         await storeTown('Cape Town', 'CA');
-
-    //     } else if (town === "CJ") {
-    //         await storeTown('Paarl', 'CJ');
-
-    //     } else if (town === "CL") {
-    //         await storeTown('Stellenbosch', 'CL');
-
-    //     } else if (town === "") {
-    //         return "Please Select Town";
-    //     }
-
-    //     // pushRegNumbers(allRegNumbers);
-
-    // };
+    };
 
     let regObject = async function(regNumber) {
         let regObjectQuery = (`SELECT reg_number 
