@@ -82,8 +82,7 @@ app.post('/selectTown', async function(req, res) {
     try {
         let town = req.body.theTown;
         console.log(town);
-        //  let regNumber = req.body.theRegNumber;
-        let townSelected = await registrationNumberFactoryFunction.townSelected(town);
+        let townSelected = await registrationNumberFactoryFunction.getAllFromTown(town);
 
         res.render("index", { townSelected });
     } catch (error) {

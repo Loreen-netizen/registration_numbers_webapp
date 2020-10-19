@@ -61,7 +61,13 @@
 
 
 
-        
+            {{#each townSelected}}
+            <ul name="ul" class="townsList">
+                <li>{{this.reg_number}}</li>
+            </ul>
+
+            {{/each}}
+
         
                    {{#each data.allRegNumbers}}
             <ul name="ul" class="townsList">

@@ -12,30 +12,34 @@ var registrationNumberFactoryFunction = function(pool) {
             `SELECT reg_number 
             FROM reg_nums
             where reg_number  = ($1)`, [regNum]);
-        console.log(queryRegNumber.rowCount);
+        //   console.log(queryRegNumber.rowCount);
         return queryRegNumber.rowCount;
     };
 
-    var storeReg = async function(theRegNumber) {
+    var storeReg = async function(regNumber) {
+        var checkReg = await isReg(regNumber);
 
-        var checkReg = await isReg(theRegNumber);
-        if (checkReg < 1 && !theRegNumber == "") {
+        theRegNumber = regNumber.toUpperCase();
+        let regNumberRegex = /(C[AJYL]\s\d{3}-\d{3})$|C[AJYL]\s\d{2,5}$/;
+        let result = regNumberRegex.test(theRegNumber);
+        console.log(result)
+        if ((result === true) && (checkReg < 1) && (!theRegNumber == "")) {
 
             if (theRegNumber.startsWith('CA')) {
                 await pool.query(`INSERT into reg_nums
                 (reg_number , town_start_string) VALUES( $1, 'CA')`, [theRegNumber]);
 
-            } else if (theRegNumber.startsWith('CA')) {
+            } else if (theRegNumber.startsWith('CJ')) {
                 await pool.query(`INSERT into reg_nums
-                (reg_number , town_start_string) VALUES( $1, 'CA')`, [theRegNumber]);
+                (reg_number , town_start_string) VALUES( $1, 'CJ')`, [theRegNumber]);
 
-            } else if (theRegNumber.startsWith('CA')) {
+            } else if (theRegNumber.startsWith('CL')) {
                 await pool.query(`INSERT into reg_nums
-                (reg_number , town_start_string) VALUES( $1, 'CA')`, [theRegNumber]);
+                (reg_number , town_start_string) VALUES( $1, 'CL')`, [theRegNumber]);
 
             }
 
-        } else { console.log("REG ALREADY STORED") }
+        } else if (result === false) { console.log("enter valid reg number") } else { console.log("regsaved") }
 
         //  {
         //     var storeRegQuery = (`INSERT into reg_nums
@@ -65,40 +69,25 @@ var registrationNumberFactoryFunction = function(pool) {
     let allRegNumbers = async function() {
         let allRegNumbersQuery = await pool.query(`SELECT reg_number
             FROM reg_nums`)
-        console.log(allRegNumbersQuery.rows);
+            // console.log(allRegNumbersQuery.rows);
         return allRegNumbersQuery.rows;
     }
-    let getAllFromTown = async function(townString) {
+    let getAllFromTown = async function(selectedTownString) {
         // if (!regObject.includes(theRegNumber)) {
         let getAllFromTownQuery = await pool.query(`SELECT reg_number
-            FROM reg_num
-            WHERE town_id = $1) VALUES($1, $2)`, [townName], [townString]);
-        return storeTownQuery;
+                FROM reg_nums
+                WHERE town_start_string = ($1)`, [selectedTownString]);
+        console.log(getAllFromTownQuery.rows + "townselectedobject");
+        return getAllFromTownQuery.rows;
     };
 
 
-    let townSelected = async function(town) {
-
-        if (town === "CA") {
-            await storeTown('Cape Town', 'CA');
-
-        } else if (town === "CJ") {
-            await storeTown('Paarl', 'CJ');
-
-        } else if (town === "CL") {
-            await storeTown('Stellenbosch', 'CL');
-
-        } else if (town === "") {
-            return "Please Select Town";
-        }
-
-    };
 
     let regObject = async function(regNumber) {
         let regObjectQuery = (`SELECT reg_number 
         FROM reg_nums
         WHERE reg_number = ($1)`, [regNumber])
-        console.log(regObjectQuery.rows)
+            //   console.log(regObjectQuery.rows)
         return regObjectQuery.rows
     };
 
@@ -131,7 +120,8 @@ var registrationNumberFactoryFunction = function(pool) {
         regObject,
         clearRegEntries,
         updateTownIdInRegTable,
-        allRegNumbers
+        allRegNumbers,
+        getAllFromTown
 
     }
 
