@@ -27,10 +27,10 @@ describe("registrationNumberFactoryFunction", async function() {
         //assemble
         var registrationNumberFactoryFunction = await RegistrationNumberFactoryFunction(pool);
         //act
-        var insertRegQuery = await registrationNumberFactoryFunction.storeReg('CA 234 789');
+        var insertRegQuery = await registrationNumberFactoryFunction.storeReg('CA 234-789');
         insertRegQuery;
         //assert
-        assert.equal(1, await registrationNumberFactoryFunction.isReg('CA 234 789'));
+        assert.equal(1, await registrationNumberFactoryFunction.isReg('CA 234-789'));
     });
 
     it("should save all reg numbers in database", async function() {
@@ -38,11 +38,11 @@ describe("registrationNumberFactoryFunction", async function() {
         var registrationNumberFactoryFunction = await RegistrationNumberFactoryFunction(pool);
 
         //act
-        var insertRegQuery = await registrationNumberFactoryFunction.storeReg('CA 234 789');
+        var insertRegQuery = await registrationNumberFactoryFunction.storeReg('CA 234-789');
         insertRegQuery;
         //assert
         assert.deepEqual([{
-            reg_number: 'CA 234 789'
+            reg_number: 'CA 234-789'
         }], await registrationNumberFactoryFunction.allRegNumbers())
     });
 
