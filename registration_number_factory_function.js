@@ -12,41 +12,46 @@ var registrationNumberFactoryFunction = function(pool) {
             `SELECT reg_number 
             FROM reg_nums
             where reg_number  = ($1)`, [regNum]);
-        //   console.log(queryRegNumber.rowCount);
+        console.log(queryRegNumber.rowCount);
         return queryRegNumber.rowCount;
     };
 
     var storeReg = async function(regNumber) {
-        var checkReg = await isReg(regNumber);
-
         theRegNumber = regNumber.toUpperCase();
-        let regNumberRegex = /(C[AJYL]\s\d{3}-\d{3})$|C[AJYL]\s\d{2,5}$/;
-        let result = regNumberRegex.test(theRegNumber);
-        console.log(result)
-        if ((result === true) && (checkReg < 1) && (!theRegNumber == "")) {
 
-            if (theRegNumber.startsWith('CA')) {
-                await pool.query(`INSERT into reg_nums
-                (reg_number , town_start_string) VALUES( $1, 'CA')`, [theRegNumber]);
+        let checkReg = await isReg(theRegNumber);
+        console.log(checkReg);
+        if (checkReg < 1) {
 
-            } else if (theRegNumber.startsWith('CJ')) {
-                await pool.query(`INSERT into reg_nums
-                (reg_number , town_start_string) VALUES( $1, 'CJ')`, [theRegNumber]);
+            let regNumberRegex = /(C[AJYL]\s\d{3}-\d{3})$|C[AJYL]\s\d{2,5}$/;
+            let result = regNumberRegex.test(theRegNumber);
+            console.log(result)
+            if ((result === true) && (!theRegNumber == "")) {
 
-            } else if (theRegNumber.startsWith('CL')) {
-                await pool.query(`INSERT into reg_nums
-                (reg_number , town_start_string) VALUES( $1, 'CL')`, [theRegNumber]);
+                if (theRegNumber.startsWith('CA')) {
+                    await pool.query(`INSERT into reg_nums
+            (reg_number , town_start_string) VALUES( $1, 'CA')`, [theRegNumber]);
 
-            }
+                } else if (theRegNumber.startsWith('CJ')) {
+                    await pool.query(`INSERT into reg_nums
+            (reg_number , town_start_string) VALUES( $1, 'CJ')`, [theRegNumber]);
 
-        } else if (result === false) { console.log("enter valid reg number") } else { console.log("regsaved") }
+                } else if (theRegNumber.startsWith('CL')) {
+                    await pool.query(`INSERT into reg_nums
+            (reg_number , town_start_string) VALUES( $1, 'CL')`, [theRegNumber]);
 
-        //  {
-        //     var storeRegQuery = (`INSERT into reg_nums
-        //     (reg_number) VALUES($1)`);
-        //     await pool.query(storeRegQuery, [theRegNumber]);
-        // } 
+                }
 
+            } else if (result === false) { console.log("enter valid reg number") } else { console.log("regsaved") }
+
+            //  {
+            //     var storeRegQuery = (`INSERT into reg_nums
+            //     (reg_number) VALUES($1)`);
+            //     await pool.query(storeRegQuery, [theRegNumber]);
+            // } 
+
+
+        } else { console.log("reg is greater than 1") }
 
     };
 
