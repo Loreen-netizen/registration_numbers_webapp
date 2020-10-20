@@ -44,12 +44,6 @@ var registrationNumberFactoryFunction = function(pool) {
 
             } else if (result === false) { console.log("enter valid reg number") } else { console.log("regsaved") }
 
-            //  {
-            //     var storeRegQuery = (`INSERT into reg_nums
-            //     (reg_number) VALUES($1)`);
-            //     await pool.query(storeRegQuery, [theRegNumber]);
-            // } 
-
 
         } else { console.log("reg is greater than 1") }
 
@@ -120,7 +114,10 @@ var registrationNumberFactoryFunction = function(pool) {
 
 
 
-
+    const getAllTowns = async() => {
+        const towns = await pool.query('select * from towns;');
+        return towns.rows
+    }
 
 
 
@@ -133,6 +130,7 @@ var registrationNumberFactoryFunction = function(pool) {
         clearRegEntries,
         updateTownIdInRegTable,
         allRegNumbers,
+        getAllTowns,
         getAllFromTown
 
     }

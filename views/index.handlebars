@@ -27,9 +27,12 @@
             <select  name = "theTown" class="townsList" id="townList"  type= "submit">
                 <option value="">Filter By Town</option>
                 <option value="allTowns">All Towns</option>
-                <option id="capetown" value="CA" >Cape Town</option>
+                {{#each towns}}
+                    <option value="{{this.town_string}}" >{{this.town_name}}</option>
+                {{/each}}
+                {{!-- <option id="capetown" value="CA" >Cape Town</option>
                 <option id="paarl" value="CJ" >Paarl</option>
-                <option id="stellenbosch" value="CL">Stellenbosch</option>
+                <option id="stellenbosch" value="CL">Stellenbosch</option> --}}
             </select>
             <button type="submit " name= "submitTown" id="filterButton">Filter</button>
 
@@ -57,7 +60,7 @@
         </div>
 
 
-        <label class="errorLabel" class="labels"></label>
+        {{!-- <label class="errorLabel" class="labels"></label> --}}
 
 
 

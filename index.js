@@ -9,6 +9,7 @@ let flash = require('express-flash');
 
 let pg = require("pg");
 const { log } = require("handlebars");
+const _ = require('lodash')
 let Pool = pg.Pool;
 let connectionString = process.env.DATABASE_URL || 'postgresql://loreen:pg123@localhost:5432/reg_numbers';
 let pool = new Pool({
@@ -44,18 +45,24 @@ app.get("/addFlash", function(req, res) {
 });
 
 
-app.get("/", function(req, res) {
-    res.render('index')
+app.get("/", async function(req, res) {
+    const getDropdownTowns = await registrationNumberFactoryFunction.getAllTowns();
+    res.render('index', {
+        towns: getDropdownTowns
+    })
 });
 
 app.post("/reg_Numbers", async function(req, res) {
+    console.log(req.body);
     try {
         let regNumber = req.body.theRegNumber;
+        const getDropdownTowns = await registrationNumberFactoryFunction.getAllTowns();
 
-
-        if (!regNumber) {
+        if (_.isEmpty(regNumber)) {
             req.flash('error', 'Please enter reg number')
-
+            res.render('index', {
+                towns: getDropdownTowns
+            })
         } else
 
         {
@@ -64,10 +71,12 @@ app.post("/reg_Numbers", async function(req, res) {
                 saveReg: await registrationNumberFactoryFunction.storeReg(regNumber),
                 allRegNumbers: await registrationNumberFactoryFunction.allRegNumbers(),
                 isReg: await registrationNumberFactoryFunction.isReg(regNumber),
+
             }
 
             res.render('index', {
-                data
+                data,
+                towns: getDropdownTowns
             })
         }
 
@@ -83,8 +92,12 @@ app.post('/selectTown', async function(req, res) {
         let town = req.body.theTown;
         console.log(town);
         let townSelected = await registrationNumberFactoryFunction.getAllFromTown(town);
+        const getDropdownTowns = await registrationNumberFactoryFunction.getAllTowns();
 
-        res.render("index", { townSelected });
+        res.render("index", {
+            townSelected,
+            towns: getDropdownTowns
+        });
     } catch (error) {
         console.log(error)
     }
@@ -96,8 +109,12 @@ app.post('/selectTown', async function(req, res) {
 app.post("/clearReg", async function(req, res) {
 
     let clearReg = await registrationNumberFactoryFunction.clearRegEntries();
+    const getDropdownTowns = await registrationNumberFactoryFunction.getAllTowns();
 
-    res.render("index", { clearReg })
+    res.render("index", {
+        clearReg,
+        towns: getDropdownTowns
+    })
 });
 
 
