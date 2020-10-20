@@ -23,13 +23,14 @@
         font-size: xxx-large;
     }
     
-    .errorLabel {
+    .err {
         padding: 0;
         color: red;
         padding-left: 5em;
         padding-top: 0;
         padding-bottom: 1em;
         font-weight: 700;
+        font-size: xx-large;
     }
     
     .buttons {

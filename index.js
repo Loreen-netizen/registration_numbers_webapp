@@ -55,10 +55,18 @@ app.get("/", async function(req, res) {
 app.post("/reg_Numbers", async function(req, res) {
     console.log(req.body);
     try {
-        let regNumber = req.body.theRegNumber;
+        let RegNumber = req.body.theRegNumber;
+        let regNumber = RegNumber.toUpperCase();
         const getDropdownTowns = await registrationNumberFactoryFunction.getAllTowns();
+        let regNumberRegex = /(C[AJYL]\s\d{3}-\d{3})$|C[AJYL]\s\d{2,5}$/;
+        let result = regNumberRegex.test(regNumber);
 
-        if (_.isEmpty(regNumber)) {
+        if (result === false) {
+            req.flash('error', 'Please enter VALID reg number')
+            res.render('index', {
+                towns: getDropdownTowns
+            })
+        } else if (_.isEmpty(regNumber)) {
             req.flash('error', 'Please enter reg number')
             res.render('index', {
                 towns: getDropdownTowns
