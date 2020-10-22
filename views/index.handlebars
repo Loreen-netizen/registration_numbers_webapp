@@ -5,42 +5,21 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>registration_number_widget</title>
-    <link rel="stylesheet" href="./registration_number.css">
+    {{!-- <link rel="stylesheet" href="./registration_number.css"> --}}
 </head>
 
 <body>
     <div class="main">
 
-         <div class="err">
-             
-             {{messages.error}}
-          {{#if messages.error}}  <p>e.g CA 123-456 or CA 123</p>
-         {{/if}}
-         </div>
+        <div class="err">
+
+            {{messages.error}}
+            {{#if messages.error}} <p>e.g CA 123-456 or CA 123</p>
+            {{/if}}
+        </div>
 
 
         <label class="labels">Registration Number:</label>
-
-         <div class="townsWrapper">
-
-              <form action="/selectTown" method="POST">
-       
-            <select  name = "theTown" class="townsList" id="townList"  type= "submit">
-                <option value="">Filter By Town</option>
-                <option value="allTowns">All Towns</option>
-                {{#each towns}}
-                    <option value="{{this.town_string}}" >{{this.town_name}}</option>
-                {{/each}}
-                {{!-- <option id="capetown" value="CA" >Cape Town</option>
-                <option id="paarl" value="CJ" >Paarl</option>
-                <option id="stellenbosch" value="CL">Stellenbosch</option> --}}
-            </select>
-            <button type="submit " name= "submitTown" id="filterButton">Filter</button>
-
-<br> <br>
-        </form>
-
-         </div>
 
 
         <div class="userInput">
@@ -49,52 +28,79 @@
                     name="theRegNumber">
 
 
-                <button id="addButton" name="addRegNumber" type="submit">Add</button>
-                 
+                <button name="addRegNumber" type="submit" class="button">Add</button>
+
             </form>
 
-            <form action="/clearReg" method="POST">
-            
-             <button {{clearEntries}} id="clearRegButton" name="clearRegNumber" type="submit">Clear Entries</button>
-            
-            </form>
-        </div>
 
 
-        {{!-- <label class="errorLabel" class="labels"></label> --}}
+            <div class="townsWrapper">
+
+                <form action="/selectTown" method="POST">
+
+                    <select name="theTown" class="filterTowns" id="townList" type="submit">
+                        <option value="">Filter By Town</option>
+                        <option value="allTowns">All Towns</option>
+                        {{#each towns}}
+                        <option value="{{this.town_string}}">{{this.town_name}}</option>
+                        {{/each}}
+                        {{!-- <option id="capetown" value="CA" >Cape Town</option>
+                <option id="paarl" value="CJ" >Paarl</option>
+                <option id="stellenbosch" value="CL">Stellenbosch</option> --}}
+                    </select>
+                    <button type="submit " class="button" name="submitTown" id="filterButton">Filter</button>
+
+                    <br> <br>
+                </form>
+
+            </div>
 
 
 
+
+
+
+
+            {{!-- <label class="errorLabel" class="labels"></label> --}}
+
+ <div class="listDiv">
             {{#each townSelected}}
             <ul name="ul" class="townsList">
-                <li>{{this.reg_number}}</li>
+               
+                    <li>{{this.reg_number}}</li>
+                
             </ul>
 
             {{/each}}
 
-        
-                   {{#each data.allRegNumbers}}
+
+            {{#each data.allRegNumbers}}
             <ul name="ul" class="townsList">
-                <li>{{this.reg_number}}</li>
+                <div class="listDiv">
+                    <li>{{this.reg_number}}</li>
+                </div>
             </ul>
 
             {{/each}}
 
-            {{!-- <p>{{data.store}}</p> --}}
-        </div>
+</div>
+
+
+            <!-- <button class="buttons" id="filterButton">filter</button> -->
+
+
+            <form action="/clearReg" method="POST">
+
+                <button {{clearEntries}} id="clearButton" name="clearRegNumber" type="submit">Clear Entries</button>
+
+            </form>
+
+
+
+
+
 
         </div>
-        <!-- <button class="buttons" id="filterButton">filter</button> -->
-
-
-        <button class="buttons" id="clearButton">Clear Entries</button>
-
-
-
-
-
-
-    </div>
 </body>
 
 
