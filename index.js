@@ -3,6 +3,7 @@ let app = express();
 let bodyParser = require("body-parser");
 let handlebars = require("express-handlebars");
 let RegistrationNumberFactoryFunction = require("./registration_number_factory_function.js");
+let RegFacFunTwo = require("./regFacFunTwo.js");
 let session = require('express-session');
 let flash = require('express-flash');
 
@@ -17,7 +18,7 @@ let pool = new Pool({
 });
 
 let registrationNumberFactoryFunction = RegistrationNumberFactoryFunction(pool);
-
+let regFacFunTwo = RegFacFunTwo(registrationNumberFactoryFunction);
 app.engine('handlebars', handlebars({ layoutsDir: "./views/layouts" }));
 app.set('view engine', 'handlebars');
 
@@ -35,98 +36,15 @@ app.use(bodyParser.json());
 
 
 
-app.get("/addFlash", function(req, res) {
-    try {
-        req.flash('info', 'flash Message added')
-        res.redirect('/')
-    } catch (error) {
-        console.log(error)
-    }
-});
+app.get("/addFlash", regFacFunTwo.flashMessages);
 
+app.get("/", regFacFunTwo.getTowns);
 
-app.get("/", async function(req, res) {
-    const getDropdownTowns = await registrationNumberFactoryFunction.getAllTowns();
-    res.render('index', {
-        towns: getDropdownTowns
-    })
-});
+app.post("/reg_Numbers", regFacFunTwo.getData);
 
-app.post("/reg_Numbers", async function(req, res) {
-    console.log(req.body);
-    try {
-        let RegNumber = req.body.theRegNumber;
-        let regNumber = RegNumber.toUpperCase();
-        const getDropdownTowns = await registrationNumberFactoryFunction.getAllTowns();
-        let regNumberRegex = /(C[AJYL]\s\d{3}-\d{3})$|C[AJYL]\s\d{2,5}$/;
-        let result = regNumberRegex.test(regNumber);
+app.post('/selectTown', regFacFunTwo.townData);
 
-        if (result === false) {
-            req.flash('error', 'Please enter VALID reg number')
-            res.render('index', {
-                towns: getDropdownTowns
-            })
-        } else if (_.isEmpty(regNumber)) {
-            req.flash('error', 'Please enter reg number')
-            res.render('index', {
-                towns: getDropdownTowns
-            })
-        } else
-
-        {
-            var data = {
-                regObject: await registrationNumberFactoryFunction.regObject(regNumber),
-                saveReg: await registrationNumberFactoryFunction.storeReg(regNumber),
-                allRegNumbers: await registrationNumberFactoryFunction.allRegNumbers(),
-                isReg: await registrationNumberFactoryFunction.isReg(regNumber),
-
-            }
-
-            res.render('index', {
-                data,
-                towns: getDropdownTowns
-            })
-        }
-
-    } catch (error) {
-        console.log(error)
-    }
-
-});
-
-app.post('/selectTown', async function(req, res) {
-
-    try {
-        let town = req.body.theTown;
-        console.log(town);
-        let townSelected = await registrationNumberFactoryFunction.getAllFromTown(town);
-        const getDropdownTowns = await registrationNumberFactoryFunction.getAllTowns();
-
-        res.render("index", {
-            townSelected,
-            towns: getDropdownTowns
-        });
-    } catch (error) {
-        console.log(error)
-    }
-
-
-})
-
-
-app.post("/clearReg", async function(req, res) {
-
-    let clearReg = await registrationNumberFactoryFunction.clearRegEntries();
-    const getDropdownTowns = await registrationNumberFactoryFunction.getAllTowns();
-
-    res.render("index", {
-        clearReg,
-        towns: getDropdownTowns
-    })
-});
-
-
-
+app.post("/clearReg", regFacFunTwo.clearReg);
 
 const PORT = process.env.PORT || 3999;
 
