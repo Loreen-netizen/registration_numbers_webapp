@@ -5,7 +5,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>registration_number_widget</title>
-    {{!-- <link rel="stylesheet" href="./registration_number.css"> --}}
 </head>
 
 <body class="main">
@@ -23,11 +22,11 @@
         </div>
 
 
-        <div class="heading">
+        <div class="row heading justify-content-lg-center">
             <h1>Registration Number:</h1>
         </div>
         <form action="/reg_Numbers" method="POST">
-            <div class="row my-5 ">
+            <div class="row my-5 justify-content-lg-center">
 
                 <div class="">
 
@@ -44,7 +43,7 @@
 
         <form action="/selectTown" method="POST">
 
-            <div class="row">
+            <div class="row justify-content-lg-center">
 
 
                 <div class="">
@@ -68,37 +67,40 @@
         </form>
         <br>
         <div class="liMainDiv">
-     <div class="row">
-            {{#each townSelected}}
-            <ul name="ul" class="townsList">
-               
-                    <li>{{this.reg_number}}</li>
-                
-            </ul>
+            <div class="row justify-content-lg-center">
+                <div class="col-6">
+                    {{#each townSelected}}
+                    <ul name="ul" class="townsList">
 
-            {{/each}}
+                        <li>{{this.reg_number}}</li>
+
+                    </ul>
+
+                    {{/each}}
 
 
-            {{#each data.allRegNumbers}}
-            <ul name="ul" class="townsList">
-                <div class="listDiv">
-                    <li>{{this.reg_number}}</li>
+                    {{#each data.allRegNumbers}}
+                    <ul name="ul" class="townsList">
+                        <div class="listDiv">
+                            <li>{{this.reg_number}}</li>
+                        </div>
+                    </ul>
+
+                    {{/each}}
                 </div>
-            </ul>
 
-            {{/each}}
 
-</div>
+            </div>
 
- </div>
- <br>
+        </div>
+        <br>
         <form action="/clearReg" method="POST">
 
-            <div class="row">
+            <div class="row justify-content-lg-center">
                 <div class="">
 
-                    <button {{clearEntries}} id="clearButton" class="btn btn-outline-default mb-3 ml-5" name="clearRegNumber"
-                        type="submit">Clear
+                    <button {{clearEntries}} id="clearButton" class="btn btn-outline-default mb-3 ml-5"
+                        name="clearRegNumber" type="submit">Clear
                         Entries</button>
 
 
