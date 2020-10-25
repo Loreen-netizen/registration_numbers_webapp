@@ -8,63 +8,67 @@
     {{!-- <link rel="stylesheet" href="./registration_number.css"> --}}
 </head>
 
-<body>
-    <div class="main">
+<body class="main">
+    <div class="theMain">
 
-        <div class="err">
+        <div>
 
-            {{messages.error}}
-            {{#if messages.error}} <p>e.g CA 123-456 or CA 123</p>
-            {{/if}}
+
+            {{#if messages.error}} <p class="alert alert-danger alert-dismissible fade show" role="alert">
+                {{messages.error}} e.g CA 123-456 or CA 123</p>
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+                {{/if}}
+
         </div>
 
 
-        <label class="labels">Registration Number:</label>
+        <div class="heading">
+            <h1>Registration Number:</h1>
+        </div>
+        <form action="/reg_Numbers" method="POST">
+            <div class="row my-5 ">
+
+                <div class="">
+
+                    <h4> <input type="text" value="" placeholder="Enter Reg Number e.g CA 123-456" id="regNumberInput"
+                            name="theRegNumber" class="enterReg"></h4>
+                </div>
+
+                <div class=""> <button name="addRegNumber" type="submit"
+                        class="btn btn-outline-default mb-3 ml-5">Add</button>
+                </div>
+            </div>
+        </form>
 
 
-        <div class="userInput">
-            <form action="/reg_Numbers" method="POST">
-                <input type="text" value="" placeholder="Enter Reg Number e.g CA 123-456" id="regNumberInput"
-                    name="theRegNumber">
+        <form action="/selectTown" method="POST">
+
+            <div class="row">
 
 
-                <button name="addRegNumber" type="submit" class="button">Add</button>
+                <div class="">
 
-            </form>
+                    <select name="theTown" class="dropdown mt-3 towns" type="submit">
 
-
-
-            <div class="townsWrapper">
-
-                <form action="/selectTown" method="POST">
-
-                    <select name="theTown" class="filterTowns" id="townList" type="submit">
                         <option value="">Filter By Town</option>
+
                         <option value="allTowns">All Towns</option>
                         {{#each towns}}
                         <option value="{{this.town_string}}">{{this.town_name}}</option>
                         {{/each}}
-                        {{!-- <option id="capetown" value="CA" >Cape Town</option>
-                <option id="paarl" value="CJ" >Paarl</option>
-                <option id="stellenbosch" value="CL">Stellenbosch</option> --}}
+
                     </select>
-                    <button type="submit " class="button" name="submitTown" id="filterButton">Filter</button>
-
-                    <br> <br>
-                </form>
-
+                </div>
+                <div class="mt-3">
+                    <button type="submit " class="btn btn-outline-default mb-3 ml-5" name="submitTown">Filter</button>
+                </div>
             </div>
 
-
-
-
-
-
-
-            {{!-- <label class="errorLabel" class="labels"></label> --}}
-
- <div class="liMainDiv">
-     <div class="listDiv">
+        </form>
+        <br>
+        <div class="liMainDiv">
+     <div class="row">
             {{#each townSelected}}
             <ul name="ul" class="townsList">
                
@@ -87,22 +91,22 @@
 </div>
 
  </div>
+ <br>
+        <form action="/clearReg" method="POST">
 
-            <!-- <button class="buttons" id="filterButton">filter</button> -->
+            <div class="row">
+                <div class="">
 
-
-            <form action="/clearReg" method="POST">
-
-                <button {{clearEntries}} id="clearButton" name="clearRegNumber" type="submit">Clear Entries</button>
-
-            </form>
-
-
+                    <button {{clearEntries}} id="clearButton" class="btn btn-outline-default mb-3 ml-5" name="clearRegNumber"
+                        type="submit">Clear
+                        Entries</button>
 
 
+                </div>
+            </div>
+        </form>
 
-
-        </div>
+    </div>
 </body>
 
 
