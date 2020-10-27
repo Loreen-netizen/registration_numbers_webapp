@@ -75,14 +75,20 @@ var registrationNumberFactoryFunction = function(pool) {
             // console.log(allRegNumbersQuery.rows);
         return allRegNumbersQuery.rows;
     }
-    let getAllFromTown = async function(selectedTownString) {
-        if (selectedTownString != "allTowns") {
+    let getAllFromTown = async function(selectedTownName) {
+
+        if (selectedTownName != "allTowns") {
+            let getTownStringQuery = await pool.query('SELECT town_string FROM towns WHERE town_name = ($1)', [selectedTownName]);
+            let selectedTownString = getTownStringQuery.rows[0].town_string;
+            console.log(selectedTownString);
+
+
             let getAllFromTownQuery = await pool.query(`SELECT reg_number
             FROM reg_nums
             WHERE town_start_string = ($1)`, [selectedTownString]);
             console.log("not all towns");
             return getAllFromTownQuery.rows;
-        } else if (selectedTownString === "allTowns") {
+        } else if (selectedTownName === "allTowns") {
 
             let getAllTownsQuery = await pool.query(`SELECT reg_number
         FROM reg_nums`);

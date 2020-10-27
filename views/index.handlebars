@@ -32,7 +32,7 @@
                     {{#if messages.error}} <div class="alert alert-danger alert-dismissible">
 
                         <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-                        <strong>{{messages.error}}</strong> </div>
+                        <p>{{messages.error}}</p> </div>
 
                     {{/if}}
                 </div>
@@ -65,10 +65,10 @@
                             <option value="">Filter By Town</option>
 
                             <option value="allTowns">All Towns</option>
-                            <option value="CA">Cape Town</option>
-                            <option value="CJ">Paarl</option>
-                            <option value="CL">Stellenbosch</option>
-                            <option value="CY">BellviLle</option>
+                           {{#each towns}} 
+                            <option value="{{this.town_name}}">{{this.town_name}}</option>
+                           {{/each}} 
+                            
 
                         </select>
                     </div>

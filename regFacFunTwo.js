@@ -24,7 +24,7 @@ let regFacFunTwo = function(registrationNumberFactoryFunction) {
             let RegNumber = req.body.theRegNumber;
             let regNumber = RegNumber.toUpperCase();
             let checkReg = await registrationNumberFactoryFunction.isReg(regNumber);
-            console.log(checkReg);
+            // console.log(checkReg);
 
             let getDropdownTowns = await registrationNumberFactoryFunction.getAllTowns();
             let regNumberRegex = /(C[AJYL]\s\d{3}-\d{3})$|C[AJYL]\s\d{2,5}$/;
@@ -75,7 +75,7 @@ let regFacFunTwo = function(registrationNumberFactoryFunction) {
             console.log(town);
             let townSelected = await registrationNumberFactoryFunction.getAllFromTown(town);
             const getDropdownTowns = await registrationNumberFactoryFunction.getAllTowns();
-
+            // console.log({ getDropdownTowns })
             res.render("index", {
                 townSelected,
                 towns: getDropdownTowns
