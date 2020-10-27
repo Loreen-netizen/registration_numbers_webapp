@@ -8,107 +8,127 @@
 </head>
 
 <body class="main">
-    <div class="theMain">
 
-        <div>
+    <div class="row theMain justify-content-center">
 
 
-            {{#if messages.error}} <p class="alert alert-danger alert-dismissible fade show" role="alert">
-                {{messages.error}} e.g CA 123-456 or CA 123</p>
-            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-                {{/if}}
+        <div class="col-2-lg">
 
+            <p class="text-left"></p>
         </div>
 
+        <div class="col-8-lg col-9-md justify-content-center centerDiv mx-2">
+            <div class="row text-center head bg-light">
 
-        <div class="row heading justify-content-lg-center">
-            <h1>Registration Number:</h1>
-        </div>
-        <form action="/reg_Numbers" method="POST">
-            <div class="row my-5 justify-content-lg-center">
-
-                <div class="">
-
-                    <h4> <input type="text" value="" placeholder="Enter Reg Number e.g CA 123-456" id="regNumberInput"
-                            name="theRegNumber" class="enterReg"></h4>
+                <div class="col-12">
+                    <h1>Registration Number:</h1>
                 </div>
 
-                <div class=""> <button name="addRegNumber" type="submit"
-                        class="btn btn-outline-default mb-3 ml-5">Add</button>
-                </div>
-            </div>
-        </form>
-
-
-        <form action="/selectTown" method="POST">
-
-            <div class="row justify-content-lg-center">
-
-
-                <div class="">
-
-                    <select name="theTown" class="dropdown mt-3 towns" type="submit">
-
-                        <option value="">Filter By Town</option>
-
-                        <option value="allTowns">All Towns</option>
-                        {{#each towns}}
-                        <option value="{{this.town_string}}">{{this.town_name}}</option>
-                        {{/each}}
-
-                    </select>
-                </div>
-                <div class="mt-3">
-                    <button type="submit " class="btn btn-outline-default mb-3 ml-5" name="submitTown">Filter</button>
-                </div>
             </div>
 
-        </form>
-        <br>
-        <div class="liMainDiv">
-            <div class="row justify-content-lg-center">
-                <div class="col-6">
+            <div class="row">
+                <div class="col-12">
+                    {{#if messages.error}} <p class="alert alert-danger alert-dismissible fade show" role="alert">
+                        {{messages.error}} e.g CA 123-456 or CA 123</p>
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                        {{/if}}
+                </div>
+            </div>
+            <form action="/reg_Numbers" method="POST">
+                <div class="row my-5 justify-content-lg-center">
+
+                    <div class="form-group">
+
+                        <h4> <input type="text" value="" placeholder="Enter Reg Number e.g CA 123-456"
+                                id="regNumberInput" name="theRegNumber" class="enterReg text-center"></h4>
+                    </div>
+
+                    <div class=""> <button name="addRegNumber" type="submit"
+                            class="btn btn-outline-default mb-3 ml-5 form-group">Add</button>
+                    </div>
+                </div>
+            </form>
+
+
+            <form action="/selectTown" method="POST">
+
+                <div class="row justify-content-lg-center">
+
+
+                    <div class="">
+
+                        <select name="theTown" class="dropdown mt-3 towns" type="submit">
+
+                            <option value="">Filter By Town</option>
+
+                            <option value="allTowns">All Towns</option>
+                            <option value="CA">Cape Town</option>
+                            <option value="CJ">Paarl</option>
+                            <option value="CL">Stellenbosch</option>
+                            <option value="CY">BellviLle</option>
+
+                        </select>
+                    </div>
+                    <div class="mt-3">
+                        <button type="submit " class="btn btn-outline-default mb-3 ml-5"
+                            name="submitTown">Filter</button>
+                    </div>
+                </div>
+
+            </form>
+            <br>
+            <br>
+            <form action="/clearReg" method="POST">
+
+                <div class="row justify-content-lg-center">
+                    <div class="col-12">
+
+                        <button id="clearButton" class="btn btn-outline-default mb-3" name="clearRegNumber"
+                            type="submit">Clear
+                            Entries</button>
+
+
+                    </div>
+                </div>
+            </form>
+
+            <br>
+
+            <div class="row justify-content-lg-center px-5">
+                <div class="col-12">
                     {{#each townSelected}}
                     <ul name="ul" class="townsList">
 
-                        <li>{{this.reg_number}}</li>
+                        <li class="text-center">{{this.reg_number}}</li>
 
-                    </ul>
-
-                    {{/each}}
-
-
-                    {{#each data.allRegNumbers}}
-                    <ul name="ul" class="townsList">
-                        <div class="listDiv">
-                            <li>{{this.reg_number}}</li>
-                        </div>
                     </ul>
 
                     {{/each}}
                 </div>
+                <div class="col-12">
+                    {{#each data.allRegNumbers}}
+                    <ul name="ul" class="townsList">
 
+                        <li class="text-center">{{this.reg_number}}</li>
+
+                    </ul>
+
+                    {{/each}}
+
+
+
+                </div>
+            </div>
+
+            <br>
+
+            <div class="col-2-lg">
+                <p class="text-right"></p>
 
             </div>
 
         </div>
-        <br>
-        <form action="/clearReg" method="POST">
-
-            <div class="row justify-content-lg-center">
-                <div class="">
-
-                    <button {{clearEntries}} id="clearButton" class="btn btn-outline-default mb-3 ml-5"
-                        name="clearRegNumber" type="submit">Clear
-                        Entries</button>
-
-
-                </div>
-            </div>
-        </form>
-
-    </div>
 </body>
 
 
