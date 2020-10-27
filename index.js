@@ -46,7 +46,7 @@ app.post('/selectTown', regFacFunTwo.townData);
 
 app.post("/clearReg", regFacFunTwo.clearReg);
 
-const PORT = process.env.PORT || 3999;
+const PORT = process.env.PORT || 3990;
 
 app.listen(PORT, function() {
     console.log("App starting on port", PORT)

@@ -32,10 +32,23 @@
                     {{#if messages.error}} <div class="alert alert-danger alert-dismissible">
 
                         <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-                        <p>{{messages.error}}</p> </div>
+                        <p class="text-center">{{messages.error}}</p>
+                    </div>
 
                     {{/if}}
                 </div>
+                <div class="col-12">
+                    {{#if messages.success}}
+                    <div class="alert alert-success alert-dismissible">
+
+                        <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                        <p class="text-center">{{messages.success}} </p>
+                    </div>
+
+                    {{/if}}
+                </div>
+
+
             </div>
             <form action="/reg_Numbers" method="POST">
                 <div class="row my-5 justify-content-lg-center">
@@ -48,9 +61,12 @@
 
                     <div class=""> <button name="addRegNumber" type="submit"
                             class="btn btn-outline-default mb-3 ml-5 form-group">Add</button>
+
                     </div>
                 </div>
             </form>
+
+
 
 
             <form action="/selectTown" method="POST">
@@ -65,10 +81,10 @@
                             <option value="">Filter By Town</option>
 
                             <option value="allTowns">All Towns</option>
-                           {{#each towns}} 
+                            {{#each towns}}
                             <option value="{{this.town_name}}">{{this.town_name}}</option>
-                           {{/each}} 
-                            
+                            {{/each}}
+
 
                         </select>
                     </div>

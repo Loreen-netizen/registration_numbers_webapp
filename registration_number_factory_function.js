@@ -129,6 +129,15 @@ var registrationNumberFactoryFunction = function(pool) {
         return towns.rows
     }
 
+    let showSuccess = async function(regNumber) {
+        let checkReg = isReg(regNumber);
+        if (checkReg < 1) {
+            return true
+        } else return
+    }
+
+
+
 
 
 
@@ -141,7 +150,8 @@ var registrationNumberFactoryFunction = function(pool) {
         updateTownIdInRegTable,
         allRegNumbers,
         getAllTowns,
-        getAllFromTown
+        getAllFromTown,
+        showSuccess
 
     }
 
