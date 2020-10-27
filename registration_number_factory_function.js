@@ -40,6 +40,10 @@ var registrationNumberFactoryFunction = function(pool) {
                     await pool.query(`INSERT into reg_nums
             (reg_number , town_start_string) VALUES( $1, 'CL')`, [theRegNumber]);
 
+                } else if (theRegNumber.startsWith('CY')) {
+                    await pool.query(`INSERT into reg_nums
+            (reg_number , town_start_string) VALUES( $1, 'CY')`, [theRegNumber]);
+
                 }
 
             } else if (result === false) { console.log("enter valid reg number") } else { console.log("regsaved") }
