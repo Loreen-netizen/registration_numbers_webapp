@@ -19,21 +19,29 @@ let regFacFunTwo = function(registrationNumberFactoryFunction) {
     };
 
     let getData = async function(req, res) {
-        console.log(req.body);
+
         try {
             let RegNumber = req.body.theRegNumber;
             let regNumber = RegNumber.toUpperCase();
-            const getDropdownTowns = await registrationNumberFactoryFunction.getAllTowns();
+            let checkReg = await registrationNumberFactoryFunction.isReg(regNumber);
+            console.log(checkReg);
+
+            let getDropdownTowns = await registrationNumberFactoryFunction.getAllTowns();
             let regNumberRegex = /(C[AJYL]\s\d{3}-\d{3})$|C[AJYL]\s\d{2,5}$/;
             let result = regNumberRegex.test(regNumber);
 
             if (result === false) {
-                req.flash('error', 'Please enter VALID reg number')
+                req.flash('error', 'Please enter VALID reg number e.g CA 123-456 or CA 123')
+                res.render('index', {
+                    towns: getDropdownTowns
+                })
+            } else if (checkReg >= 1) {
+                req.flash('error', 'This Reg Number Has Already Been Entered')
                 res.render('index', {
                     towns: getDropdownTowns
                 })
             } else if (_.isEmpty(regNumber)) {
-                req.flash('error', 'Please enter reg number')
+                req.flash('error', 'Please enter reg number e.g CA 123-456 or CA 123')
                 res.render('index', {
                     towns: getDropdownTowns
                 })
