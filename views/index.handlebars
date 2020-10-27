@@ -25,14 +25,16 @@
                 </div>
 
             </div>
+            <br>
 
             <div class="row">
                 <div class="col-12">
-                    {{#if messages.error}} <p class="alert alert-danger alert-dismissible fade show" role="alert">
-                        {{messages.error}} e.g CA 123-456 or CA 123</p>
-                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                        {{/if}}
+                    {{#if messages.error}} <div class="alert alert-danger alert-dismissible">
+
+                        <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                        <strong>{{messages.error}} e.g CA 123-456 or CA 123</strong> </div>
+
+                    {{/if}}
                 </div>
             </div>
             <form action="/reg_Numbers" method="POST">
@@ -115,8 +117,6 @@
                     </ul>
 
                     {{/each}}
-
-
 
                 </div>
             </div>
