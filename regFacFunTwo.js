@@ -46,9 +46,9 @@ let regFacFunTwo = function(registrationNumberFactoryFunction) {
 
 
             let getDropdownTowns = await registrationNumberFactoryFunction.getAllTowns();
-            let regNumberRegex = /(C[AJYL]\s\d{3}-\d{3})$|C[AJYL]\s\d{2,5}$/;
+            let regNumberRegex = /(C[AJYL]\s\d{3}[-\s]\d{3})$|C[AJYL]\s\d{2,6}$/gmi;
             let result = regNumberRegex.test(regNumber);
-
+            console.log(result)
             if (result === false) {
                 req.flash('error', 'Please enter VALID reg number e.g CA 123-456 or CA 123')
                 res.render('index', {

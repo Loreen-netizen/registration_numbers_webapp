@@ -23,7 +23,7 @@ var registrationNumberFactoryFunction = function(pool) {
         console.log(checkReg);
         if (checkReg < 1) {
 
-            let regNumberRegex = /(C[AJYL]\s\d{3}-\d{3})$|C[AJYL]\s\d{2,5}$/;
+            let regNumberRegex = /(C[AJYL]\s\d{3}[-\s]\d{3})$|C[AJYL]\s\d{2,6}$/gmi;
             let result = regNumberRegex.test(theRegNumber);
             console.log(result)
             if ((result === true) && (!theRegNumber == "")) {
