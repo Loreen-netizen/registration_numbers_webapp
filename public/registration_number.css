@@ -1,7 +1,7 @@
       .main {
           padding-bottom: 30%;
           background-image: linear-gradient(rgb(243, 135, 189), rgb(255, 255, 29));
-          overflow: hidden;
+          /* overflow: hidden; */
       }
       
       .theMain {
@@ -46,7 +46,7 @@
       }
       
       .centerDiv {
-          padding: 8%;
+          padding: 3%;
           margin-top: 1em;
           background-color: rgba(255, 255, 255, 0.3);
           background-image: linear-gradient(rgba(243, 135, 189, 0.3), rgba(255, 255, 29, 0.3));

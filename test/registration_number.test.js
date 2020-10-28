@@ -46,6 +46,42 @@ describe("registrationNumberFactoryFunction", async function() {
         }], await registrationNumberFactoryFunction.allRegNumbers())
     });
 
+    it("should save be able to delete all reg numbers from the database", async function() {
+        //assmble
+        var registrationNumberFactoryFunction = await RegistrationNumberFactoryFunction(pool);
+
+        //act
+        var insertRegQuery = await registrationNumberFactoryFunction.storeReg('CA 234-789');
+        insertRegQuery;
+        //assert
+        assert.deepEqual([], await registrationNumberFactoryFunction.clearRegEntries())
+    });
+
+    it("should be able to get all reg numbers from the database", async function() {
+        //assmble
+        var registrationNumberFactoryFunction = await RegistrationNumberFactoryFunction(pool);
+
+        //act
+        var insertRegQuery = await registrationNumberFactoryFunction.storeReg('CL 234-789');
+        insertRegQuery;
+        //assert
+        assert.deepEqual([{
+            reg_number: 'CL 234-789'
+        }], await registrationNumberFactoryFunction.getAllFromTown('Stellenbosch'))
+    });
+
+    it("should be able to select a specific reg number from the database", async function() {
+        //assmble
+        var registrationNumberFactoryFunction = await RegistrationNumberFactoryFunction(pool);
+
+        //act
+        var insertRegQuery = await registrationNumberFactoryFunction.storeReg('CJ 004-789');
+        insertRegQuery;
+        //assert
+        assert.deepEqual(['CJ 004-789'], await registrationNumberFactoryFunction.regObject('CJ 004-789'))
+    });
+
+
     after(async function() {
         await pool.end();
     })

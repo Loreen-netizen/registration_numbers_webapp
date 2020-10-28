@@ -51,16 +51,16 @@
 
             </div>
             <form action="/reg_Numbers" method="POST">
-                <div class="row my-5 justify-content-lg-center">
+                <div class="row my-5 justify-content-lg-center form-group">
 
-                    <div class="form-group">
+                    <div class="">
 
                         <h4> <input type="text" value="" placeholder="Enter Reg Number e.g CA 123-456"
                                 id="regNumberInput" name="theRegNumber" class="enterReg text-center"></h4>
                     </div>
 
                     <div class=""> <button name="addRegNumber" type="submit"
-                            class="btn btn-outline-default mb-3 ml-5 form-group">Add</button>
+                            class="btn btn-outline-default mb-3 ml-5">Add</button>
 
                     </div>
                 </div>
@@ -92,17 +92,12 @@
                         <button type="submit " class="btn btn-outline-default mb-3 ml-5"
                             name="submitTown">Filter</button>
                     </div>
-                </div>
-
-            </form>
-            <br>
-            <br>
-            <form action="/clearReg" method="POST">
+                    <form action="/clearReg" method="POST">
 
                 <div class="row justify-content-lg-center">
                     <div class="col-12">
 
-                        <button id="clearButton" class="btn btn-outline-default mb-3" name="clearRegNumber"
+                        <button id="clearButton" class="btn btn-outline-default ml-3 mt-3" name="clearRegNumber"
                             type="submit">Clear
                             Entries</button>
 
@@ -110,11 +105,15 @@
                     </div>
                 </div>
             </form>
+                </div>
+
+            </form>
+        
 
             <br>
 
-            <div class="row justify-content-lg-center px-5">
-                <div class="col-12">
+            <div class="row justify-content-center px-5">
+                <div class="">
                     {{#each townSelected}}
                     <ul name="ul" class="townsList">
 
@@ -124,7 +123,7 @@
 
                     {{/each}}
                 </div>
-                <div class="col-12">
+                <div class="">
                     {{#each data.allRegNumbers}}
                     <ul name="ul" class="townsList">
 

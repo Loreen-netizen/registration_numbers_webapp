@@ -57,16 +57,16 @@ var registrationNumberFactoryFunction = function(pool) {
 
         let clearRegQuery = await pool.query(`DELETE FROM reg_nums`);
 
-        return clearRegQuery
+        return clearRegQuery.rows
     }
 
-    let updateTownIdInRegTable = function(startString) {
+    // let updateTownIdInRegTable = function(startString) {
 
-        var updateTownIdQuery = (`UPDATE reg_nums
-        SET town_id = ($1)
-        WHERE reg_number =($1)`, [startString, regNumber])
+    //     var updateTownIdQuery = (`UPDATE reg_nums
+    //     SET town_id = ($1)
+    //     WHERE reg_number =($1)`, [startString, regNumber])
 
-    }
+    // }
 
 
     let allRegNumbers = async function() {
@@ -103,8 +103,8 @@ var registrationNumberFactoryFunction = function(pool) {
         let regObjectQuery = (`SELECT reg_number 
         FROM reg_nums
         WHERE reg_number = ($1)`, [regNumber])
-            //   console.log(regObjectQuery.rows)
-        return regObjectQuery.rows
+            // console.log(regObjectQuery)
+        return regObjectQuery
     };
 
     let regNumbersObject = async function(theRegNumber) {
@@ -115,25 +115,9 @@ var registrationNumberFactoryFunction = function(pool) {
     };
 
 
-
-
-
-    // let pushRegNumbers = function() {
-    //     return allRegNumbers
-    // };
-
-
-
     const getAllTowns = async() => {
         const towns = await pool.query('select * from towns;');
         return towns.rows
-    }
-
-    let showSuccess = async function(regNumber) {
-        let checkReg = isReg(regNumber);
-        if (checkReg < 1) {
-            return true
-        } else return
     }
 
 
@@ -147,11 +131,10 @@ var registrationNumberFactoryFunction = function(pool) {
         regNumbersObject,
         regObject,
         clearRegEntries,
-        updateTownIdInRegTable,
+        // updateTownIdInRegTable,
         allRegNumbers,
         getAllTowns,
-        getAllFromTown,
-        showSuccess
+        getAllFromTown
 
     }
 
