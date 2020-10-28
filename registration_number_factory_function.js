@@ -79,7 +79,7 @@ var registrationNumberFactoryFunction = function(pool) {
 
         if (selectedTownName != "allTowns") {
             let getTownStringQuery = await pool.query('SELECT town_string FROM towns WHERE town_name = ($1)', [selectedTownName]);
-            let selectedTownString = getTownStringQuery.rows[0].town_string;
+            let selectedTownString = await getTownStringQuery.rows[0].town_string;
             console.log(selectedTownString);
 
 
@@ -116,7 +116,7 @@ var registrationNumberFactoryFunction = function(pool) {
 
 
     const getAllTowns = async() => {
-        const towns = await pool.query('select * from towns;');
+        const towns = await pool.query('select * from towns');
         return towns.rows
     }
 
