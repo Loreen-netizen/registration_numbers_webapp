@@ -50,6 +50,7 @@
       }
       
       .centerDiv {
+          margin-top: 1em;
           padding: 10%;
           background-color: rgba(255, 255, 255, 0.3);
           background-image: linear-gradient(rgba(243, 135, 189, 0.3), rgba(255, 255, 29, 0.3));
@@ -61,4 +62,5 @@
           font-weight: 600;
           padding: 0em;
           margin: 0em;
+          margin-top: -2em;
       }
