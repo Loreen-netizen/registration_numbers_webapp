@@ -18,18 +18,10 @@
         </div>
 
         <div class="col-8-lg col-9-md justify-content-center centerDiv mx-2">
-            <div class="row text-center head bg-light">
-
-                <div class="col-12">
-                    <h1>Registration Number:</h1>
-                </div>
-
-            </div>
-            <br>
 
             <div class="row">
-                <div class="col-12">
-                    {{#if messages.error}} <div class="alert alert-danger alert-dismissible">
+                <div class="col-12 error py-0 mx-0">
+                    {{#if messages.error}} <div class="alert text-danger alert-dismissible">
 
                         <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
                         <p class="text-center">{{messages.error}}</p>
@@ -37,9 +29,9 @@
 
                     {{/if}}
                 </div>
-                <div class="col-12">
+                <div class="col-12 error py-0 mx-0">
                     {{#if messages.success}}
-                    <div class="alert alert-success alert-dismissible">
+                    <div class="alert text-success alert-dismissible">
 
                         <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
                         <p class="text-center">{{messages.success}} </p>
@@ -50,6 +42,19 @@
 
 
             </div>
+
+
+            <div class="row text-center justify-content-center head">
+                
+                <div class="col-12">
+                    <h2>Registration Number:</h2>
+                </div>
+               
+
+            </div>
+
+
+
             <form action="/reg_Numbers" method="POST">
                 <div class="row my-5 justify-content-lg-center form-group">
 
@@ -98,7 +103,7 @@
             </form>
 
 
-          
+
 
             <br>
 
@@ -128,7 +133,7 @@
 
             <br>
 
-             <div class="row justify-content-center">
+            <div class="row justify-content-center">
                 <div class="col-3"></div>
                 <div class="col-3">
 
